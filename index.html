@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel do Comando · DP Lynwood</title>
+<meta name="theme-color" content="#09090b">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23f7e6ab'/%3E%3Cstop offset='46%25' stop-color='%23e2bd55'/%3E%3Cstop offset='100%25' stop-color='%23b8912f'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' fill='%2309090b'/%3E%3Cpath d='M16 5 L27 16 L16 27 L5 16 Z' fill='url(%23g)'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#09090b; --void2:#0f0f13; --panel:#151519; --panel2:#0d0d11;
+  --line:rgba(212,175,55,.16); --line2:rgba(230,230,235,.07); --line3:rgba(212,175,55,.32);
+  --gold:#e8c66b; --gold-d:#c9a227;
+  --red:#e0384a; --red-b:#ff6b76;
+  --green:#3fca7d; --amber:#f0a83c;
+  --steel:#e8eaee; --body:#b4b8c0; --muted:#7f838d; --muted2:#555962;
+  --r:16px; --r-sm:10px;
+  --disp:'Oswald',system-ui,sans-serif; --text:'Barlow',system-ui,sans-serif; --mono:'JetBrains Mono',monospace;
+  --gg:linear-gradient(135deg,#f7e6ab 0%,#e2bd55 46%,#b8912f 100%);
+  --gg-soft:linear-gradient(135deg,rgba(247,230,171,.16),rgba(184,145,47,.06));
+}
+*{box-sizing:border-box}
+html{scrollbar-color:var(--gold-d) var(--void2)}
+body{margin:0;background:var(--void);color:var(--body);font-family:var(--text);font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh;
+  background-image:
+    radial-gradient(1000px 560px at 82% -10%,rgba(212,175,55,.06),transparent 60%),
+    linear-gradient(rgba(212,175,55,.045) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(212,175,55,.045) 1px,transparent 1px);
+  background-size:auto,44px 44px,44px 44px;
+  background-attachment:fixed}
+a{color:inherit;text-decoration:none}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:var(--void2)}
+::-webkit-scrollbar-thumb{background:var(--gold-d);border-radius:99px;border:2px solid var(--void2)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+@keyframes riseIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.login-card{animation:riseIn .45s ease both}
+
+/* ---------- login ---------- */
+#loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+.login-card{width:100%;max-width:380px;border:1px solid var(--line);border-radius:var(--r);background:linear-gradient(158deg,var(--panel),var(--panel2));padding:2rem}
+.login-card .mark{display:flex;align-items:center;gap:.55rem;font-family:var(--disp);font-weight:700;letter-spacing:.16em;font-size:.85rem;color:var(--steel);margin-bottom:1.4rem}
+.login-card .mark b{background:var(--gg);-webkit-background-clip:text;background-clip:text;color:transparent}
+.login-card .mark span{width:9px;height:9px;background:var(--gg);box-shadow:0 0 12px rgba(232,198,107,.6);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+.login-card h1{font-family:var(--disp);font-size:1.15rem;color:var(--steel);margin:0 0 .3rem;text-transform:uppercase;letter-spacing:.02em}
+.login-card p{margin:0 0 1.4rem;color:var(--muted);font-size:.82rem}
+.login-card label{display:block;font-family:var(--disp);font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:.68rem;color:var(--steel);margin-bottom:.4rem}
+.login-card input{width:100%;border:1.5px solid var(--line);border-radius:var(--r-sm);padding:.7rem .85rem;font-size:.9rem;font-family:var(--text);color:var(--steel);background:var(--void2);margin-bottom:1rem}
+.login-card input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,175,55,.14)}
+.login-card button{width:100%;font-family:var(--disp);font-weight:700;letter-spacing:.1em;font-size:.8rem;text-transform:uppercase;border:none;border-radius:99px;padding:.8rem;cursor:pointer;background:var(--gg);color:#151006}
+.login-card button:hover{filter:brightness(1.06)}
+#loginError{display:none;border:1px solid rgba(224,56,74,.4);background:rgba(224,56,74,.1);color:var(--red-b);border-radius:var(--r-sm);padding:.6rem .8rem;font-size:.8rem;margin-bottom:1rem}
+
+/* ---------- app shell ---------- */
+#app{display:none}
+#app.show{display:block}
+.topbar{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:.8rem;padding:.8rem clamp(1rem,3vw,2rem);background:rgba(9,9,11,.86);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.mark{display:flex;align-items:center;gap:.55rem;font-family:var(--disp);font-weight:700;letter-spacing:.16em;font-size:.88rem;color:var(--steel)}
+.mark b{background:var(--gg);-webkit-background-clip:text;background-clip:text;color:transparent}
+.mark span{width:9px;height:9px;background:var(--gg);box-shadow:0 0 12px rgba(232,198,107,.6);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+.sp{flex:1}
+.navlink,.logout{font-family:var(--disp);font-weight:600;letter-spacing:.1em;font-size:.7rem;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);padding:.45rem .85rem;border-radius:99px;cursor:pointer;background:transparent;transition:.15s}
+.navlink:hover,.logout:hover{border-color:var(--gold);color:var(--gold)}
+
+main{max-width:1080px;margin:0 auto;padding:1.6rem 1.2rem 4rem}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.75rem;margin-bottom:1.6rem}
+.stat{border:1px solid var(--line);border-radius:var(--r-sm);background:linear-gradient(158deg,var(--panel),var(--panel2));padding:1rem 1.1rem;display:flex;align-items:center;gap:.8rem;transition:.15s}
+.stat:hover{border-color:var(--line3);transform:translateY(-1px)}
+.stat .ic{font-size:1.35rem;flex-shrink:0;opacity:.9}
+.stat .label{font-family:var(--disp);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem}
+.stat .value{font-family:var(--disp);font-size:1.7rem;font-weight:700;color:var(--steel);line-height:1}
+.stat.flagged .value{color:var(--amber)}
+.stat.banned .value{color:var(--red-b)}
+.stat.good .value{color:var(--green)}
+
+.toolbar{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:1rem;align-items:center}
+.tabs{display:flex;gap:.3rem;border:1px solid var(--line);border-radius:var(--r-sm);padding:4px;background:var(--void2)}
+.tabs button{border:none;background:none;padding:.45rem .85rem;border-radius:7px;font-family:var(--disp);font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:.7rem;cursor:pointer;color:var(--muted)}
+.tabs button.active{background:var(--gg);color:#151006}
+.search-wrap{position:relative;flex:1;min-width:180px}
+.search-wrap .ic{position:absolute;left:.75rem;top:50%;transform:translateY(-50%);font-size:.8rem;opacity:.6;pointer-events:none}
+.search{width:100%;border:1.5px solid var(--line);border-radius:var(--r-sm);padding:.6rem .85rem .6rem 2.1rem;font-size:.85rem;font-family:var(--text);color:var(--steel);background:var(--void2)}
+.search:focus{outline:none;border-color:var(--gold)}
+.tabs button .count{opacity:.65;font-size:.9em;margin-left:.15em}
+.search:focus{outline:none;border-color:var(--gold)}
+
+section.panel{border:1px solid var(--line);border-radius:var(--r);background:linear-gradient(158deg,var(--panel),var(--panel2));overflow:hidden;margin-bottom:1.8rem}
+.panel-head{padding:.9rem 1.1rem;border-bottom:1px solid var(--line2);font-family:var(--disp);font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:.82rem;color:var(--steel)}
+
+.item{padding:1rem 1.1rem;border-bottom:1px solid var(--line2);border-left:3px solid transparent;transition:background .15s}
+.item:hover{background:rgba(255,255,255,.012)}
+.item.is-flagged{border-left-color:var(--amber)}
+.item.is-banned{border-left-color:var(--red-b)}
+.avatar{flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--gg);color:#151006;display:inline-flex;align-items:center;justify-content:center;font-family:var(--disp);font-weight:700;font-size:.68rem}
+.item:last-child{border-bottom:none}
+.item-top{display:flex;justify-content:space-between;gap:.7rem;margin-bottom:.5rem;flex-wrap:wrap}
+.item-name{font-weight:700;font-size:.92rem;color:var(--steel);display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.item-date{font-family:var(--mono);font-size:.68rem;color:var(--muted2);white-space:nowrap}
+.badge{display:inline-flex;align-items:center;gap:.3rem;font-family:var(--disp);font-size:.6rem;font-weight:700;padding:.18rem .55rem;border-radius:99px;text-transform:uppercase;letter-spacing:.04em}
+.badge.warn{background:rgba(240,168,60,.12);color:var(--amber);border:1px solid rgba(240,168,60,.4)}
+.badge.banned{background:rgba(224,56,74,.12);color:var(--red-b);border:1px solid rgba(224,56,74,.4)}
+.item-message{font-size:.9rem;line-height:1.55;color:var(--body);white-space:pre-wrap;margin-bottom:.6rem}
+.item-meta{display:flex;flex-wrap:wrap;gap:.7rem;font-family:var(--mono);font-size:.68rem;color:var(--muted2);margin-bottom:.6rem}
+.item-meta code{background:var(--void2);padding:.1rem .4rem;border-radius:5px}
+.item-actions{display:flex;gap:.5rem;flex-wrap:wrap}
+.item-actions button{border:1px solid var(--line);background:transparent;border-radius:var(--r-sm);padding:.4rem .75rem;font-family:var(--disp);font-size:.68rem;font-weight:600;letter-spacing:.03em;text-transform:uppercase;cursor:pointer;color:var(--muted)}
+.item-actions button:hover{border-color:var(--gold);color:var(--gold)}
+.item-actions button.danger{color:var(--red-b);border-color:rgba(224,56,74,.4)}
+.item-actions button.danger:hover{background:rgba(224,56,74,.1)}
+.item-actions button.warnbtn{color:var(--amber);border-color:rgba(240,168,60,.4)}
+.item-actions button.warnbtn:hover{background:rgba(240,168,60,.1)}
+.item-actions button:disabled{opacity:.35;cursor:not-allowed}
+.item-actions button:disabled:hover{background:transparent}
+
+.empty{padding:2.4rem 1rem;text-align:center;color:var(--muted2);font-size:.85rem}
+
+.ban-row{display:flex;justify-content:space-between;align-items:center;padding:.85rem 1.1rem;border-bottom:1px solid var(--line2);gap:.7rem;flex-wrap:wrap}
+.ban-row:last-child{border-bottom:none}
+.ban-info{font-size:.85rem;color:var(--body)}
+.ban-info code{background:var(--void2);padding:.15rem .45rem;border-radius:6px;font-family:var(--mono);font-size:.72rem}
+.ban-info .reason{color:var(--muted2);font-size:.72rem;margin-top:.2rem}
+.ban-row button{border:1px solid rgba(63,202,125,.4);background:transparent;border-radius:var(--r-sm);padding:.4rem .8rem;font-family:var(--disp);font-size:.68rem;font-weight:600;text-transform:uppercase;cursor:pointer;color:var(--green)}
+.ban-row button:hover{background:rgba(63,202,125,.1)}
+
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(5,5,6,.6);z-index:50;align-items:center;justify-content:center;padding:20px}
+.modal-bg.show{display:flex}
+.modal{border:1px solid var(--line3);border-radius:var(--r);background:linear-gradient(158deg,var(--panel),var(--panel2));padding:1.6rem;max-width:400px;width:100%}
+.modal h3{margin:0 0 .5rem;font-family:var(--disp);color:var(--steel);text-transform:uppercase;letter-spacing:.02em;font-size:1rem}
+.modal p{margin:0 0 1.2rem;font-size:.85rem;color:var(--muted);line-height:1.5}
+.modal .row{display:flex;gap:.6rem;justify-content:flex-end}
+.modal button{border:none;border-radius:99px;padding:.6rem 1.1rem;font-family:var(--disp);font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;cursor:pointer}
+.modal button.cancel{background:var(--void2);color:var(--muted)}
+.modal button.confirm{background:linear-gradient(135deg,#ff6b76,#c22638);color:#fff}
+
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--gold);color:#151006;padding:.7rem 1.2rem;border-radius:99px;font-family:var(--disp);font-weight:600;font-size:.8rem;opacity:0;pointer-events:none;transition:.2s;z-index:60}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(-6px)}
+</style>
+</head>
+<body>
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="mark"><span></span> <b>DP LYNWOOD</b></div>
+    <h1>Painel do Comando</h1>
+    <p>Acesso restrito. Faça login para ver a Ouvidoria.</p>
+    <div id="loginError"></div>
+    <form id="loginForm">
+      <label for="loginEmail">Usuário</label>
+      <input type="text" id="loginEmail" required autocomplete="username" autocapitalize="off" spellcheck="false" />
+      <label for="loginPass">Senha</label>
+      <input type="password" id="loginPass" required autocomplete="current-password" />
+      <button type="submit">Entrar</button>
+    </form>
+  </div>
+</div>
+
+<div id="app">
+  <header class="topbar">
+    <div class="mark"><span></span> <b>DP LYNWOOD</b></div>
+    <div class="sp"></div>
+    <a class="navlink" href="./ouvidoria.html">📢 Ouvidoria</a>
+    <button class="navlink" id="settingsBtn">⚙ Senha</button>
+    <button class="logout" id="logoutBtn">Sair</button>
+  </header>
+
+  <main>
+    <div class="stats">
+      <div class="stat"><span class="ic">📋</span><div><div class="label">Total de Registros</div><div class="value" id="statTotal">0</div></div></div>
+      <div class="stat flagged"><span class="ic">⚠</span><div><div class="label">Sinalizados</div><div class="value" id="statFlagged">0</div></div></div>
+      <div class="stat banned"><span class="ic">🚫</span><div><div class="label">Bloqueios Ativos</div><div class="value" id="statBanned">0</div></div></div>
+      <div class="stat good"><span class="ic">📅</span><div><div class="label">Hoje</div><div class="value" id="statToday">0</div></div></div>
+    </div>
+
+    <div class="toolbar">
+      <div class="tabs">
+        <button class="active" data-filter="all">Todos <span class="count" id="countAll">(0)</span></button>
+        <button data-filter="flagged">Sinalizados <span class="count" id="countFlagged">(0)</span></button>
+      </div>
+      <div class="search-wrap"><span class="ic">🔍</span><input class="search" id="searchInput" placeholder="Buscar por nome ou texto..." /></div>
+    </div>
+
+    <section class="panel">
+      <div class="panel-head">Registros da Ouvidoria</div>
+      <div id="listContainer"><div class="empty">Carregando...</div></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">🚫 Bloqueios Ativos (IP / Aparelho)</div>
+      <div id="bannedContainer"><div class="empty">Nenhum bloqueio ativo.</div></div>
+    </section>
+  </main>
+</div>
+
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <h3 id="modalTitle">Confirmar ação</h3>
+    <p id="modalText"></p>
+    <div class="row">
+      <button class="cancel" id="modalCancel">Cancelar</button>
+      <button class="confirm" id="modalConfirm">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="settingsBg">
+  <div class="modal">
+    <h3>⚙ Alterar senha de acesso</h3>
+    <p>Troque a senha usada para entrar neste painel. Você precisa confirmar a senha atual.</p>
+    <div id="settingsError" style="display:none;border:1px solid rgba(224,56,74,.4);background:rgba(224,56,74,.1);color:var(--red-b);border-radius:var(--r-sm);padding:.6rem .8rem;font-size:.8rem;margin-bottom:1rem"></div>
+    <div id="settingsOk" style="display:none;border:1px solid rgba(63,202,125,.4);background:rgba(63,202,125,.1);color:var(--green);border-radius:var(--r-sm);padding:.6rem .8rem;font-size:.8rem;margin-bottom:1rem"></div>
+    <form id="settingsForm">
+      <label style="display:block;font-family:var(--disp);font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:.68rem;color:var(--steel);margin-bottom:.4rem">Senha atual</label>
+      <input type="password" id="curPass" required autocomplete="current-password" style="width:100%;border:1.5px solid var(--line);border-radius:var(--r-sm);padding:.7rem .85rem;font-size:.9rem;font-family:var(--text);color:var(--steel);background:var(--void2);margin-bottom:1rem" />
+      <label style="display:block;font-family:var(--disp);font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:.68rem;color:var(--steel);margin-bottom:.4rem">Nova senha (mín. 6 caracteres)</label>
+      <input type="password" id="newPass" required minlength="6" autocomplete="new-password" style="width:100%;border:1.5px solid var(--line);border-radius:var(--r-sm);padding:.7rem .85rem;font-size:.9rem;font-family:var(--text);color:var(--steel);background:var(--void2);margin-bottom:1rem" />
+      <label style="display:block;font-family:var(--disp);font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:.68rem;color:var(--steel);margin-bottom:.4rem">Confirmar nova senha</label>
+      <input type="password" id="newPass2" required minlength="6" autocomplete="new-password" style="width:100%;border:1.5px solid var(--line);border-radius:var(--r-sm);padding:.7rem .85rem;font-size:.9rem;font-family:var(--text);color:var(--steel);background:var(--void2);margin-bottom:1.2rem" />
+      <div class="row">
+        <button type="button" class="cancel" id="settingsCancel">Fechar</button>
+        <button type="submit" class="confirm" style="background:var(--gg);color:#151006">Salvar nova senha</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyDVIKbfNVw4_iQGdiLrJhRfcPSVNjeZDLU",
+    authDomain: "comando-geral-98c87.firebaseapp.com",
+    databaseURL: "https://comando-geral-98c87-default-rtdb.firebaseio.com",
+    projectId: "comando-geral-98c87",
+    storageBucket: "comando-geral-98c87.firebasestorage.app",
+    messagingSenderId: "744810462465",
+    appId: "1:744810462465:web:075ce2c6fdad28e6b1ef00"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+</script>
+
+<script>
+  // ============================================================
+  // LOGIN LOCAL (sem Firebase Authentication)
+  // ------------------------------------------------------------
+  // Não usa o serviço de Authentication do Firebase (evita precisar ativar
+  // nada no Firebase Console). O usuário e a senha ficam guardados no próprio
+  // Realtime Database, em /panelConfig/auth, como um hash SHA-256 (nunca a
+  // senha em texto puro). Na primeira vez que o painel é aberto, ele cria
+  // sozinho o login padrão: usuário "adm", senha "admin1234".
+  //
+  // Importante: como não existe Firebase Authentication aqui, a proteção
+  // real dos dados depende das regras do Realtime Database já configuradas
+  // no seu projeto. Se o projeto estiver com as regras padrão abertas (comum
+  // em projetos de teste), tanto a Ouvidoria quanto este painel funcionam
+  // sem nenhum passo extra no Firebase Console — mas isso também significa
+  // que, tecnicamente, alguém com a URL do banco poderia ler/escrever direto
+  // nos dados, contornando esta tela de login. Ela é uma trava de acesso ao
+  // painel, não uma trava criptográfica do banco em si (isso só é possível
+  // com Firebase Authentication + regras, que exigem 2 cliques no Console).
+  // ============================================================
+  const DEFAULT_ADMIN_USER = "adm";
+  const DEFAULT_ADMIN_PASS = "admin1234";
+
+  async function sha256Hex(texto){
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(texto));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
+  }
+  function saltAleatorio(){
+    const arr = new Uint8Array(16);
+    crypto.getRandomValues(arr);
+    return Array.from(arr).map(b => b.toString(16).padStart(2, "0")).join("");
+  }
+  async function gerarHash(senha, salt){ return sha256Hex(salt + ":" + senha); }
+
+  async function garantirLoginPadrao(){
+    const snap = await db.ref("panelConfig/auth").once("value");
+    if(!snap.exists()){
+      const salt = saltAleatorio();
+      const hash = await gerarHash(DEFAULT_ADMIN_PASS, salt);
+      await db.ref("panelConfig/auth").set({ user: DEFAULT_ADMIN_USER, salt, hash });
+    }
+  }
+
+  const loginScreen = document.getElementById("loginScreen");
+  const appEl = document.getElementById("app");
+  const loginForm = document.getElementById("loginForm");
+  const loginError = document.getElementById("loginError");
+  const SESSION_KEY = "dpComandoAuth";
+
+  function mostrarApp(){ loginScreen.style.display = "none"; appEl.classList.add("show"); startListening(); }
+  function mostrarLogin(){ loginScreen.style.display = "flex"; appEl.classList.remove("show"); }
+
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    loginError.style.display = "none";
+    const usuario = document.getElementById("loginEmail").value.trim().toLowerCase();
+    const senha = document.getElementById("loginPass").value;
+    if(!usuario || !senha){ loginError.textContent = "Preencha usuário e senha."; loginError.style.display = "block"; return; }
+    try{
+      await garantirLoginPadrao();
+      const snap = await db.ref("panelConfig/auth").once("value");
+      const cfg = snap.val();
+      const hashDigitado = cfg ? await gerarHash(senha, cfg.salt) : null;
+      if(!cfg || usuario !== (cfg.user || "").toLowerCase() || hashDigitado !== cfg.hash){
+        loginError.textContent = "Usuário ou senha incorretos.";
+        loginError.style.display = "block";
+        return;
+      }
+      sessionStorage.setItem(SESSION_KEY, "1");
+      mostrarApp();
+    }catch(err){
+      console.error(err);
+      loginError.textContent = "Não foi possível conectar ao banco agora. Verifique sua conexão (ou as regras do Firebase) e tente de novo.";
+      loginError.style.display = "block";
+    }
+  });
+
+  document.getElementById("logoutBtn").addEventListener("click", () => {
+    sessionStorage.removeItem(SESSION_KEY);
+    mostrarLogin();
+  });
+
+  if(sessionStorage.getItem(SESSION_KEY) === "1"){ mostrarApp(); } else { mostrarLogin(); }
+</script>
+
+<script>
+  // ============================================================
+  // ALTERAR SENHA DE ACESSO (dentro do próprio painel)
+  // ============================================================
+  const settingsBg = document.getElementById("settingsBg");
+  const settingsForm = document.getElementById("settingsForm");
+  const settingsError = document.getElementById("settingsError");
+  const settingsOk = document.getElementById("settingsOk");
+
+  function resetSettingsForm(){
+    settingsForm.reset();
+    settingsError.style.display = "none";
+    settingsOk.style.display = "none";
+  }
+
+  document.getElementById("settingsBtn").addEventListener("click", () => {
+    resetSettingsForm();
+    settingsBg.classList.add("show");
+  });
+  document.getElementById("settingsCancel").addEventListener("click", () => settingsBg.classList.remove("show"));
+
+  settingsForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    settingsError.style.display = "none";
+    settingsOk.style.display = "none";
+
+    const curPass = document.getElementById("curPass").value;
+    const newPass = document.getElementById("newPass").value;
+    const newPass2 = document.getElementById("newPass2").value;
+
+    if(newPass.length < 6){
+      settingsError.textContent = "A nova senha precisa ter pelo menos 6 caracteres.";
+      settingsError.style.display = "block";
+      return;
+    }
+    if(newPass !== newPass2){
+      settingsError.textContent = "As duas senhas novas não coincidem.";
+      settingsError.style.display = "block";
+      return;
+    }
+
+    try{
+      const snap = await db.ref("panelConfig/auth").once("value");
+      const cfg = snap.val();
+      if(!cfg){
+        settingsError.textContent = "Não foi possível carregar a configuração atual. Tente novamente.";
+        settingsError.style.display = "block";
+        return;
+      }
+      const hashAtual = await gerarHash(curPass, cfg.salt);
+      if(hashAtual !== cfg.hash){
+        settingsError.textContent = "Senha atual incorreta.";
+        settingsError.style.display = "block";
+        return;
+      }
+      const novoSalt = saltAleatorio();
+      const novoHash = await gerarHash(newPass, novoSalt);
+      await db.ref("panelConfig/auth").set({ user: cfg.user, salt: novoSalt, hash: novoHash });
+      settingsOk.textContent = "✅ Senha alterada com sucesso.";
+      settingsOk.style.display = "block";
+      settingsForm.reset();
+      toast("Senha alterada com sucesso.");
+      setTimeout(() => settingsBg.classList.remove("show"), 1400);
+    }catch(err){
+      console.error(err);
+      settingsError.textContent = "Não foi possível alterar a senha agora. Tente novamente.";
+      settingsError.style.display = "block";
+    }
+  });
+</script>
+
+<script>
+  const toastEl = document.getElementById("toast");
+  function toast(msg){ toastEl.textContent = msg; toastEl.classList.add("show"); setTimeout(() => toastEl.classList.remove("show"), 2600); }
+
+  const modalBg = document.getElementById("modalBg");
+  const modalTitle = document.getElementById("modalTitle");
+  const modalText = document.getElementById("modalText");
+  const modalConfirm = document.getElementById("modalConfirm");
+  const modalCancel = document.getElementById("modalCancel");
+  function confirmAction(title, text){
+    return new Promise((resolve) => {
+      modalTitle.textContent = title; modalText.textContent = text; modalBg.classList.add("show");
+      const cleanup = (r) => { modalBg.classList.remove("show"); modalConfirm.removeEventListener("click", onC); modalCancel.removeEventListener("click", onX); resolve(r); };
+      const onC = () => cleanup(true); const onX = () => cleanup(false);
+      modalConfirm.addEventListener("click", onC); modalCancel.addEventListener("click", onX);
+    });
+  }
+</script>
+
+<script>
+  let allSuggestions = [];
+  let allBans = [];
+  let currentFilter = "all";
+  let currentSearch = "";
+  let listeningStarted = false;
+
+  function startListening(){
+    if(listeningStarted) return;
+    listeningStarted = true;
+
+    db.ref("suggestions").on("value", (snap) => {
+      const val = snap.val() || {};
+      allSuggestions = Object.keys(val).map(id => ({ id, ...val[id] })).sort((a,b) => (b.createdAt||0)-(a.createdAt||0));
+      renderStats(); renderList();
+    }, (err) => {
+      console.error(err);
+      document.getElementById("listContainer").innerHTML = '<div class="empty">Erro ao carregar registros. Verifique as regras do Realtime Database.</div>';
+    });
+
+    db.ref("banned").on("value", (snap) => {
+      const val = snap.val() || {};
+      allBans = Object.keys(val).map(id => ({ id, ...val[id] })).sort((a,b) => (b.bannedAt||0)-(a.bannedAt||0));
+      renderStats(); renderBans();
+    }, (err) => console.error(err));
+  }
+
+  function fmtDate(ts){ if(!ts) return "agora mesmo"; return new Date(ts).toLocaleString("pt-BR"); }
+  function isBannedValue(v){ return allBans.some(b => b.value === v); }
+
+  function renderStats(){
+    const flaggedCount = allSuggestions.filter(s => s.hasProfanity).length;
+    document.getElementById("statTotal").textContent = allSuggestions.length;
+    document.getElementById("statFlagged").textContent = flaggedCount;
+    document.getElementById("statBanned").textContent = allBans.length;
+    const today = new Date(); today.setHours(0,0,0,0);
+    document.getElementById("statToday").textContent = allSuggestions.filter(s => s.createdAt && s.createdAt >= today.getTime()).length;
+    document.getElementById("countAll").textContent = `(${allSuggestions.length})`;
+    document.getElementById("countFlagged").textContent = `(${flaggedCount})`;
+  }
+
+  function renderList(){
+    const container = document.getElementById("listContainer");
+    let items = allSuggestions;
+    if(currentFilter === "flagged") items = items.filter(s => s.hasProfanity);
+    if(currentSearch){
+      const q = currentSearch.toLowerCase();
+      items = items.filter(s => (s.name||"").toLowerCase().includes(q) || (s.message||"").toLowerCase().includes(q));
+    }
+    if(items.length === 0){ container.innerHTML = '<div class="empty">Nenhum registro encontrado.</div>'; return; }
+
+    container.innerHTML = items.map(s => {
+      const ipBanned = isBannedValue(s.ip);
+      const devBanned = isBannedValue(s.deviceId);
+      const isBanned = ipBanned || devBanned;
+      const nome = s.name || "Anônimo";
+      return `
+      <div class="item ${s.hasProfanity ? 'is-flagged' : ''} ${isBanned ? 'is-banned' : ''}">
+        <div class="item-top">
+          <div class="item-name">
+            <span class="avatar">${iniciais(nome)}</span>
+            ${escapeHtml(nome)}
+            ${s.hasProfanity ? '<span class="badge warn">⚠ Linguagem imprópria</span>' : ''}
+            ${isBanned ? '<span class="badge banned">🚫 Banido</span>' : ''}
+          </div>
+          <div class="item-date">${fmtDate(s.createdAt)}</div>
+        </div>
+        <div class="item-message">${escapeHtml(s.message || "")}</div>
+        <div class="item-meta">
+          <span>🌐 IP: <code>${escapeHtml(s.ip || "—")}</code></span>
+          <span>📱 Aparelho: <code>${escapeHtml((s.deviceId||"—").slice(0,18))}</code></span>
+        </div>
+        <div class="item-actions">
+          <button class="warnbtn" onclick="banItem('${s.id}','ip')" ${!s.ip || s.ip==='desconhecido' || ipBanned ? 'disabled' : ''}>🌐 Banir IP</button>
+          <button class="warnbtn" onclick="banItem('${s.id}','deviceId')" ${!s.deviceId || devBanned ? 'disabled' : ''}>📱 Banir aparelho</button>
+          <button class="danger" onclick="deleteItem('${s.id}')">🗑 Excluir</button>
+        </div>
+      </div>`;
+    }).join("");
+  }
+
+  function iniciais(nome){
+    const partes = nome.trim().split(/\s+/).filter(Boolean);
+    if(partes.length === 0) return "?";
+    if(partes.length === 1) return partes[0].slice(0,2).toUpperCase();
+    return (partes[0][0] + partes[partes.length-1][0]).toUpperCase();
+  }
+
+  function renderBans(){
+    const container = document.getElementById("bannedContainer");
+    if(allBans.length === 0){ container.innerHTML = '<div class="empty">Nenhum bloqueio ativo.</div>'; return; }
+    container.innerHTML = allBans.map(b => `
+      <div class="ban-row">
+        <div class="ban-info">
+          <div><strong>${b.type === 'ip' ? '🌐 IP' : '📱 Aparelho'}:</strong> <code>${escapeHtml(b.value)}</code></div>
+          <div class="reason">Bloqueado em ${fmtDate(b.bannedAt)}${b.reason ? ' — ' + escapeHtml(b.reason) : ''}</div>
+        </div>
+        <button onclick="unbanItem('${b.id}')">🔓 Desbloquear</button>
+      </div>
+    `).join("");
+  }
+
+  function escapeHtml(str){
+    return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+  }
+
+  async function banItem(suggestionId, field){
+    const s = allSuggestions.find(x => x.id === suggestionId);
+    if(!s) return;
+    const value = s[field];
+    if(!value) return;
+    const label = field === "ip" ? "IP" : "aparelho";
+    const ok = await confirmAction(`Banir ${label}`, `Tem certeza que deseja bloquear este ${label} (${value})? Ele não poderá mais enviar registros.`);
+    if(!ok) return;
+    try{
+      await db.ref("banned").push({
+        type: field === "ip" ? "ip" : "device", value,
+        reason: `Registro de "${s.name || 'anônimo'}"${s.hasProfanity ? ' (linguagem imprópria)' : ''}`,
+        bannedAt: firebase.database.ServerValue.TIMESTAMP
+      });
+      toast(`${label === "IP" ? "IP" : "Aparelho"} bloqueado com sucesso.`);
+    }catch(err){ console.error(err); toast("Erro ao bloquear. Tente novamente."); }
+  }
+
+  async function unbanItem(banId){
+    const ok = await confirmAction("Desbloquear", "Deseja remover este bloqueio? A pessoa poderá enviar registros novamente.");
+    if(!ok) return;
+    try{ await db.ref("banned").child(banId).remove(); toast("Bloqueio removido."); }
+    catch(err){ console.error(err); toast("Erro ao desbloquear."); }
+  }
+
+  async function deleteItem(suggestionId){
+    const ok = await confirmAction("Excluir registro", "Esta ação não pode ser desfeita. Deseja excluir este registro?");
+    if(!ok) return;
+    try{ await db.ref("suggestions").child(suggestionId).remove(); toast("Registro excluído."); }
+    catch(err){ console.error(err); toast("Erro ao excluir."); }
+  }
+
+  document.querySelectorAll(".tabs button").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".tabs button").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      currentFilter = btn.dataset.filter;
+      renderList();
+    });
+  });
+  document.getElementById("searchInput").addEventListener("input", (e) => { currentSearch = e.target.value.trim(); renderList(); });
+</script>
+</body>
+</html>
