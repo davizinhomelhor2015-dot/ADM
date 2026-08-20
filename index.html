@@ -36,20 +36,23 @@ a{color:inherit;text-decoration:none}
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 @keyframes riseIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .login-card{animation:riseIn .45s ease both}
+.icon{width:1em;height:1em;display:inline-block;vertical-align:-0.16em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.icon.filled{fill:currentColor;stroke:none}
 
 /* ---------- login ---------- */
 #loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
-.login-card{width:100%;max-width:380px;border:1px solid var(--line);border-radius:var(--r);background:linear-gradient(158deg,var(--panel),var(--panel2));padding:2rem}
+.login-card{width:100%;max-width:380px;border:1px solid var(--line);border-radius:var(--r);background:linear-gradient(158deg,var(--panel),var(--panel2));padding:2rem;box-shadow:0 24px 70px -28px rgba(0,0,0,.7),0 1px 0 rgba(255,255,255,.03) inset}
 .login-card .mark{display:flex;align-items:center;gap:.55rem;font-family:var(--disp);font-weight:700;letter-spacing:.16em;font-size:.85rem;color:var(--steel);margin-bottom:1.4rem}
 .login-card .mark b{background:var(--gg);-webkit-background-clip:text;background-clip:text;color:transparent}
 .login-card .mark span{width:9px;height:9px;background:var(--gg);box-shadow:0 0 12px rgba(232,198,107,.6);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
 .login-card h1{font-family:var(--disp);font-size:1.15rem;color:var(--steel);margin:0 0 .3rem;text-transform:uppercase;letter-spacing:.02em}
 .login-card p{margin:0 0 1.4rem;color:var(--muted);font-size:.82rem}
 .login-card label{display:block;font-family:var(--disp);font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:.68rem;color:var(--steel);margin-bottom:.4rem}
-.login-card input{width:100%;border:1.5px solid var(--line);border-radius:var(--r-sm);padding:.7rem .85rem;font-size:.9rem;font-family:var(--text);color:var(--steel);background:var(--void2);margin-bottom:1rem}
-.login-card input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,175,55,.14)}
-.login-card button{width:100%;font-family:var(--disp);font-weight:700;letter-spacing:.1em;font-size:.8rem;text-transform:uppercase;border:none;border-radius:99px;padding:.8rem;cursor:pointer;background:var(--gg);color:#151006}
-.login-card button:hover{filter:brightness(1.06)}
+.login-card input{width:100%;border:1.5px solid var(--line);border-radius:var(--r-sm);padding:.7rem .85rem;font-size:.9rem;font-family:var(--text);color:var(--steel);background:var(--void2);margin-bottom:1rem;box-shadow:0 1px 3px rgba(0,0,0,.35) inset;transition:border-color .15s,box-shadow .15s}
+.login-card input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,175,55,.14),0 1px 3px rgba(0,0,0,.35) inset}
+.login-card button{width:100%;font-family:var(--disp);font-weight:700;letter-spacing:.1em;font-size:.8rem;text-transform:uppercase;border:none;border-radius:99px;padding:.8rem;cursor:pointer;background:var(--gg);color:#151006;transition:filter .15s,box-shadow .15s,transform .1s}
+.login-card button:hover{filter:brightness(1.06);box-shadow:0 6px 26px rgba(212,175,55,.34)}
+.login-card button:active{transform:scale(.985)}
 #loginError{display:none;border:1px solid rgba(224,56,74,.4);background:rgba(224,56,74,.1);color:var(--red-b);border-radius:var(--r-sm);padding:.6rem .8rem;font-size:.8rem;margin-bottom:1rem}
 
 /* ---------- app shell ---------- */
@@ -60,15 +63,19 @@ a{color:inherit;text-decoration:none}
 .mark b{background:var(--gg);-webkit-background-clip:text;background-clip:text;color:transparent}
 .mark span{width:9px;height:9px;background:var(--gg);box-shadow:0 0 12px rgba(232,198,107,.6);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
 .sp{flex:1}
-.navlink,.logout{font-family:var(--disp);font-weight:600;letter-spacing:.1em;font-size:.7rem;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);padding:.45rem .85rem;border-radius:99px;cursor:pointer;background:transparent;transition:.15s}
-.navlink:hover,.logout:hover{border-color:var(--gold);color:var(--gold)}
+.navlink,.logout{font-family:var(--disp);font-weight:600;letter-spacing:.1em;font-size:.7rem;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);padding:.45rem .85rem;border-radius:99px;cursor:pointer;background:transparent;transition:.15s;display:inline-flex;align-items:center;gap:.4em}
+.navlink:hover,.logout:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-1px)}
+.navlink:active,.logout:active{transform:translateY(0) scale(.97)}
 
 main{max-width:1080px;margin:0 auto;padding:1.6rem 1.2rem 4rem}
 
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.75rem;margin-bottom:1.6rem}
-.stat{border:1px solid var(--line);border-radius:var(--r-sm);background:linear-gradient(158deg,var(--panel),var(--panel2));padding:1rem 1.1rem;display:flex;align-items:center;gap:.8rem;transition:.15s}
-.stat:hover{border-color:var(--line3);transform:translateY(-1px)}
-.stat .ic{font-size:1.35rem;flex-shrink:0;opacity:.9}
+.stat{border:1px solid var(--line);border-radius:var(--r-sm);background:linear-gradient(158deg,var(--panel),var(--panel2));padding:1rem 1.1rem;display:flex;align-items:center;gap:.8rem;transition:.15s;box-shadow:0 14px 40px -22px rgba(0,0,0,.6)}
+.stat:hover{border-color:var(--line3);transform:translateY(-2px);box-shadow:0 18px 46px -20px rgba(0,0,0,.65)}
+.stat .ic{font-size:1.35rem;flex-shrink:0;opacity:.9;color:var(--gold)}
+.stat.flagged .ic{color:var(--amber)}
+.stat.banned .ic{color:var(--red-b)}
+.stat.good .ic{color:var(--green)}
 .stat .label{font-family:var(--disp);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem}
 .stat .value{font-family:var(--disp);font-size:1.7rem;font-weight:700;color:var(--steel);line-height:1}
 .stat.flagged .value{color:var(--amber)}
@@ -77,16 +84,16 @@ main{max-width:1080px;margin:0 auto;padding:1.6rem 1.2rem 4rem}
 
 .toolbar{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:1rem;align-items:center}
 .tabs{display:flex;gap:.3rem;border:1px solid var(--line);border-radius:var(--r-sm);padding:4px;background:var(--void2)}
-.tabs button{border:none;background:none;padding:.45rem .85rem;border-radius:7px;font-family:var(--disp);font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:.7rem;cursor:pointer;color:var(--muted)}
+.tabs button{border:none;background:none;padding:.45rem .85rem;border-radius:7px;font-family:var(--disp);font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:.7rem;cursor:pointer;color:var(--muted);transition:.15s}
+.tabs button:hover{color:var(--steel)}
 .tabs button.active{background:var(--gg);color:#151006}
 .search-wrap{position:relative;flex:1;min-width:180px}
-.search-wrap .ic{position:absolute;left:.75rem;top:50%;transform:translateY(-50%);font-size:.8rem;opacity:.6;pointer-events:none}
-.search{width:100%;border:1.5px solid var(--line);border-radius:var(--r-sm);padding:.6rem .85rem .6rem 2.1rem;font-size:.85rem;font-family:var(--text);color:var(--steel);background:var(--void2)}
-.search:focus{outline:none;border-color:var(--gold)}
+.search-wrap .ic{position:absolute;left:.75rem;top:50%;transform:translateY(-50%);font-size:.8rem;opacity:.6;pointer-events:none;color:var(--muted)}
+.search{width:100%;border:1.5px solid var(--line);border-radius:var(--r-sm);padding:.6rem .85rem .6rem 2.1rem;font-size:.85rem;font-family:var(--text);color:var(--steel);background:var(--void2);box-shadow:0 1px 3px rgba(0,0,0,.35) inset;transition:border-color .15s,box-shadow .15s}
+.search:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,175,55,.14),0 1px 3px rgba(0,0,0,.35) inset}
 .tabs button .count{opacity:.65;font-size:.9em;margin-left:.15em}
-.search:focus{outline:none;border-color:var(--gold)}
 
-section.panel{border:1px solid var(--line);border-radius:var(--r);background:linear-gradient(158deg,var(--panel),var(--panel2));overflow:hidden;margin-bottom:1.8rem}
+section.panel{border:1px solid var(--line);border-radius:var(--r);background:linear-gradient(158deg,var(--panel),var(--panel2));overflow:hidden;margin-bottom:1.8rem;box-shadow:0 24px 70px -32px rgba(0,0,0,.7),0 1px 0 rgba(255,255,255,.03) inset}
 .panel-head{padding:.9rem 1.1rem;border-bottom:1px solid var(--line2);font-family:var(--disp);font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:.82rem;color:var(--steel)}
 
 .item{padding:1rem 1.1rem;border-bottom:1px solid var(--line2);border-left:3px solid transparent;transition:background .15s}
@@ -105,14 +112,15 @@ section.panel{border:1px solid var(--line);border-radius:var(--r);background:lin
 .item-meta{display:flex;flex-wrap:wrap;gap:.7rem;font-family:var(--mono);font-size:.68rem;color:var(--muted2);margin-bottom:.6rem}
 .item-meta code{background:var(--void2);padding:.1rem .4rem;border-radius:5px}
 .item-actions{display:flex;gap:.5rem;flex-wrap:wrap}
-.item-actions button{border:1px solid var(--line);background:transparent;border-radius:var(--r-sm);padding:.4rem .75rem;font-family:var(--disp);font-size:.68rem;font-weight:600;letter-spacing:.03em;text-transform:uppercase;cursor:pointer;color:var(--muted)}
-.item-actions button:hover{border-color:var(--gold);color:var(--gold)}
+.item-actions button{border:1px solid var(--line);background:transparent;border-radius:var(--r-sm);padding:.4rem .75rem;font-family:var(--disp);font-size:.68rem;font-weight:600;letter-spacing:.03em;text-transform:uppercase;cursor:pointer;color:var(--muted);display:inline-flex;align-items:center;gap:.4em;transition:.15s}
+.item-actions button:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-1px)}
+.item-actions button:active{transform:translateY(0) scale(.97)}
 .item-actions button.danger{color:var(--red-b);border-color:rgba(224,56,74,.4)}
 .item-actions button.danger:hover{background:rgba(224,56,74,.1)}
 .item-actions button.warnbtn{color:var(--amber);border-color:rgba(240,168,60,.4)}
 .item-actions button.warnbtn:hover{background:rgba(240,168,60,.1)}
-.item-actions button:disabled{opacity:.35;cursor:not-allowed}
-.item-actions button:disabled:hover{background:transparent}
+.item-actions button:disabled{opacity:.35;cursor:not-allowed;transform:none}
+.item-actions button:disabled:hover{background:transparent;transform:none}
 
 .empty{padding:2.4rem 1rem;text-align:center;color:var(--muted2);font-size:.85rem}
 
@@ -121,24 +129,42 @@ section.panel{border:1px solid var(--line);border-radius:var(--r);background:lin
 .ban-info{font-size:.85rem;color:var(--body)}
 .ban-info code{background:var(--void2);padding:.15rem .45rem;border-radius:6px;font-family:var(--mono);font-size:.72rem}
 .ban-info .reason{color:var(--muted2);font-size:.72rem;margin-top:.2rem}
-.ban-row button{border:1px solid rgba(63,202,125,.4);background:transparent;border-radius:var(--r-sm);padding:.4rem .8rem;font-family:var(--disp);font-size:.68rem;font-weight:600;text-transform:uppercase;cursor:pointer;color:var(--green)}
-.ban-row button:hover{background:rgba(63,202,125,.1)}
+.ban-row button{border:1px solid rgba(63,202,125,.4);background:transparent;border-radius:var(--r-sm);padding:.4rem .8rem;font-family:var(--disp);font-size:.68rem;font-weight:600;text-transform:uppercase;cursor:pointer;color:var(--green);display:inline-flex;align-items:center;gap:.4em;transition:.15s}
+.ban-row button:hover{background:rgba(63,202,125,.1);transform:translateY(-1px)}
+.ban-row button:active{transform:translateY(0) scale(.97)}
 
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(5,5,6,.6);z-index:50;align-items:center;justify-content:center;padding:20px}
 .modal-bg.show{display:flex}
-.modal{border:1px solid var(--line3);border-radius:var(--r);background:linear-gradient(158deg,var(--panel),var(--panel2));padding:1.6rem;max-width:400px;width:100%}
+.modal{border:1px solid var(--line3);border-radius:var(--r);background:linear-gradient(158deg,var(--panel),var(--panel2));padding:1.6rem;max-width:400px;width:100%;box-shadow:0 30px 90px -30px rgba(0,0,0,.8)}
 .modal h3{margin:0 0 .5rem;font-family:var(--disp);color:var(--steel);text-transform:uppercase;letter-spacing:.02em;font-size:1rem}
 .modal p{margin:0 0 1.2rem;font-size:.85rem;color:var(--muted);line-height:1.5}
 .modal .row{display:flex;gap:.6rem;justify-content:flex-end}
-.modal button{border:none;border-radius:99px;padding:.6rem 1.1rem;font-family:var(--disp);font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;cursor:pointer}
+.modal button{border:none;border-radius:99px;padding:.6rem 1.1rem;font-family:var(--disp);font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;cursor:pointer;transition:filter .15s,transform .1s}
+.modal button:hover{filter:brightness(1.08)}
+.modal button:active{transform:scale(.97)}
 .modal button.cancel{background:var(--void2);color:var(--muted)}
 .modal button.confirm{background:linear-gradient(135deg,#ff6b76,#c22638);color:#fff}
 
-.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--gold);color:#151006;padding:.7rem 1.2rem;border-radius:99px;font-family:var(--disp);font-weight:600;font-size:.8rem;opacity:0;pointer-events:none;transition:.2s;z-index:60}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--gold);color:#151006;padding:.7rem 1.2rem;border-radius:99px;font-family:var(--disp);font-weight:600;font-size:.8rem;opacity:0;pointer-events:none;transition:.2s;z-index:60;box-shadow:0 12px 30px -8px rgba(212,175,55,.5)}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(-6px)}
 </style>
 </head>
 <body>
+<svg style="position:absolute;width:0;height:0" aria-hidden="true">
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6l7-3z"/></symbol>
+  <symbol id="i-ban" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="5.5" y1="5.5" x2="18.5" y2="18.5"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.3 3.9L2.7 18a1.6 1.6 0 0 0 1.4 2.4h15.8a1.6 1.6 0 0 0 1.4-2.4L13.7 3.9a1.6 1.6 0 0 0-2.8 0z"/><line x1="12" y1="9.3" x2="12" y2="13.8"/><circle cx="12" cy="17" r="0.75" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.4l2.6 2.6L16 9.4"/></symbol>
+  <symbol id="i-megaphone" viewBox="0 0 24 24"><path d="M3 10v4a1 1 0 001 1h2l10 5V4L6 9H4a1 1 0 00-1 1z"/><path d="M18 9a4 4 0 010 6"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></symbol>
+  <symbol id="i-clipboard" viewBox="0 0 24 24"><rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4V3a1 1 0 011-1h4a1 1 0 011 1v1"/><line x1="9" y1="10" x2="15" y2="10"/><line x1="9" y1="14" x2="15" y2="14"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><line x1="20" y1="20" x2="15.3" y2="15.3"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><line x1="3" y1="12" x2="21" y2="12"/></symbol>
+  <symbol id="i-smartphone" viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M9 7V4a1 1 0 011-1h4a1 1 0 011 1v3"/><path d="M6 7l1 13a2 2 0 002 2h6a2 2 0 002-2l1-13"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></symbol>
+  <symbol id="i-unlock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 017.8-1.2"/></symbol>
+</svg>
 <div id="loginScreen">
   <div class="login-card">
     <div class="mark"><span></span> <b>DP LYNWOOD</b></div>
@@ -159,17 +185,17 @@ section.panel{border:1px solid var(--line);border-radius:var(--r);background:lin
   <header class="topbar">
     <div class="mark"><span></span> <b>DP LYNWOOD</b></div>
     <div class="sp"></div>
-    <a class="navlink" href="./ouvidoria.html">📢 Ouvidoria</a>
-    <button class="navlink" id="settingsBtn">⚙ Senha</button>
+    <a class="navlink" href="./ouvidoria.html"><svg class="icon"><use href="#i-megaphone"></use></svg> Ouvidoria</a>
+    <button class="navlink" id="settingsBtn"><svg class="icon"><use href="#i-gear"></use></svg> Senha</button>
     <button class="logout" id="logoutBtn">Sair</button>
   </header>
 
   <main>
     <div class="stats">
-      <div class="stat"><span class="ic">📋</span><div><div class="label">Total de Registros</div><div class="value" id="statTotal">0</div></div></div>
-      <div class="stat flagged"><span class="ic">⚠</span><div><div class="label">Sinalizados</div><div class="value" id="statFlagged">0</div></div></div>
-      <div class="stat banned"><span class="ic">🚫</span><div><div class="label">Bloqueios Ativos</div><div class="value" id="statBanned">0</div></div></div>
-      <div class="stat good"><span class="ic">📅</span><div><div class="label">Hoje</div><div class="value" id="statToday">0</div></div></div>
+      <div class="stat"><span class="ic"><svg class="icon"><use href="#i-clipboard"></use></svg></span><div><div class="label">Total de Registros</div><div class="value" id="statTotal">0</div></div></div>
+      <div class="stat flagged"><span class="ic"><svg class="icon"><use href="#i-alert"></use></svg></span><div><div class="label">Sinalizados</div><div class="value" id="statFlagged">0</div></div></div>
+      <div class="stat banned"><span class="ic"><svg class="icon"><use href="#i-ban"></use></svg></span><div><div class="label">Bloqueios Ativos</div><div class="value" id="statBanned">0</div></div></div>
+      <div class="stat good"><span class="ic"><svg class="icon"><use href="#i-calendar"></use></svg></span><div><div class="label">Hoje</div><div class="value" id="statToday">0</div></div></div>
     </div>
 
     <div class="toolbar">
@@ -177,7 +203,7 @@ section.panel{border:1px solid var(--line);border-radius:var(--r);background:lin
         <button class="active" data-filter="all">Todos <span class="count" id="countAll">(0)</span></button>
         <button data-filter="flagged">Sinalizados <span class="count" id="countFlagged">(0)</span></button>
       </div>
-      <div class="search-wrap"><span class="ic">🔍</span><input class="search" id="searchInput" placeholder="Buscar por nome ou texto..." /></div>
+      <div class="search-wrap"><span class="ic"><svg class="icon"><use href="#i-search"></use></svg></span><input class="search" id="searchInput" placeholder="Buscar por nome ou texto..." /></div>
     </div>
 
     <section class="panel">
@@ -186,7 +212,7 @@ section.panel{border:1px solid var(--line);border-radius:var(--r);background:lin
     </section>
 
     <section class="panel">
-      <div class="panel-head">🚫 Bloqueios Ativos (IP / Aparelho)</div>
+      <div class="panel-head"><svg class="icon"><use href="#i-ban"></use></svg> Bloqueios Ativos (IP / Aparelho)</div>
       <div id="bannedContainer"><div class="empty">Nenhum bloqueio ativo.</div></div>
     </section>
   </main>
@@ -205,7 +231,7 @@ section.panel{border:1px solid var(--line);border-radius:var(--r);background:lin
 
 <div class="modal-bg" id="settingsBg">
   <div class="modal">
-    <h3>⚙ Alterar senha de acesso</h3>
+    <h3><svg class="icon"><use href="#i-gear"></use></svg> Alterar senha de acesso</h3>
     <p>Troque a senha usada para entrar neste painel. Você precisa confirmar a senha atual.</p>
     <div id="settingsError" style="display:none;border:1px solid rgba(224,56,74,.4);background:rgba(224,56,74,.1);color:var(--red-b);border-radius:var(--r-sm);padding:.6rem .8rem;font-size:.8rem;margin-bottom:1rem"></div>
     <div id="settingsOk" style="display:none;border:1px solid rgba(63,202,125,.4);background:rgba(63,202,125,.1);color:var(--green);border-radius:var(--r-sm);padding:.6rem .8rem;font-size:.8rem;margin-bottom:1rem"></div>
@@ -396,7 +422,7 @@ section.panel{border:1px solid var(--line);border-radius:var(--r);background:lin
       const novoSalt = saltAleatorio();
       const novoHash = await gerarHash(newPass, novoSalt);
       await comTimeout(db.ref("panelConfig/auth").set({ user: cfg.user, salt: novoSalt, hash: novoHash }));
-      settingsOk.textContent = "✅ Senha alterada com sucesso.";
+      settingsOk.innerHTML = '<svg class="icon"><use href="#i-check"></use></svg> Senha alterada com sucesso.';
       settingsOk.style.display = "block";
       settingsForm.reset();
       toast("Senha alterada com sucesso.");
@@ -435,6 +461,15 @@ section.panel{border:1px solid var(--line);border-radius:var(--r);background:lin
   let currentFilter = "all";
   let currentSearch = "";
   let listeningStarted = false;
+
+  const ICO = {
+    alert: '<svg class="icon"><use href="#i-alert"></use></svg>',
+    ban: '<svg class="icon"><use href="#i-ban"></use></svg>',
+    globe: '<svg class="icon"><use href="#i-globe"></use></svg>',
+    smartphone: '<svg class="icon"><use href="#i-smartphone"></use></svg>',
+    trash: '<svg class="icon"><use href="#i-trash"></use></svg>',
+    unlock: '<svg class="icon"><use href="#i-unlock"></use></svg>'
+  };
 
   function startListening(){
     if(listeningStarted) return;
@@ -504,20 +539,20 @@ section.panel{border:1px solid var(--line);border-radius:var(--r);background:lin
           <div class="item-name">
             <span class="avatar">${iniciais(nome)}</span>
             ${escapeHtml(nome)}
-            ${s.hasProfanity ? '<span class="badge warn">⚠ Linguagem imprópria</span>' : ''}
-            ${isBanned ? '<span class="badge banned">🚫 Banido</span>' : ''}
+            ${s.hasProfanity ? `<span class="badge warn">${ICO.alert} Linguagem imprópria</span>` : ''}
+            ${isBanned ? `<span class="badge banned">${ICO.ban} Banido</span>` : ''}
           </div>
           <div class="item-date">${fmtDate(s.createdAt)}</div>
         </div>
         <div class="item-message">${escapeHtml(s.message || "")}</div>
         <div class="item-meta">
-          <span>🌐 IP: <code>${escapeHtml(s.ip || "—")}</code></span>
-          <span>📱 Aparelho: <code>${escapeHtml((s.deviceId||"—").slice(0,18))}</code></span>
+          <span>${ICO.globe} IP: <code>${escapeHtml(s.ip || "—")}</code></span>
+          <span>${ICO.smartphone} Aparelho: <code>${escapeHtml((s.deviceId||"—").slice(0,18))}</code></span>
         </div>
         <div class="item-actions">
-          <button class="warnbtn" onclick="banItem('${s.id}','ip')" ${!s.ip || s.ip==='desconhecido' || ipBanned ? 'disabled' : ''}>🌐 Banir IP</button>
-          <button class="warnbtn" onclick="banItem('${s.id}','deviceId')" ${!s.deviceId || devBanned ? 'disabled' : ''}>📱 Banir aparelho</button>
-          <button class="danger" onclick="deleteItem('${s.id}')">🗑 Excluir</button>
+          <button class="warnbtn" onclick="banItem('${s.id}','ip')" ${!s.ip || s.ip==='desconhecido' || ipBanned ? 'disabled' : ''}>${ICO.globe} Banir IP</button>
+          <button class="warnbtn" onclick="banItem('${s.id}','deviceId')" ${!s.deviceId || devBanned ? 'disabled' : ''}>${ICO.smartphone} Banir aparelho</button>
+          <button class="danger" onclick="deleteItem('${s.id}')">${ICO.trash} Excluir</button>
         </div>
       </div>`;
     }).join("");
@@ -536,10 +571,10 @@ section.panel{border:1px solid var(--line);border-radius:var(--r);background:lin
     container.innerHTML = allBans.map(b => `
       <div class="ban-row">
         <div class="ban-info">
-          <div><strong>${b.type === 'ip' ? '🌐 IP' : '📱 Aparelho'}:</strong> <code>${escapeHtml(b.value)}</code></div>
+          <div><strong>${b.type === 'ip' ? ICO.globe + ' IP' : ICO.smartphone + ' Aparelho'}:</strong> <code>${escapeHtml(b.value)}</code></div>
           <div class="reason">Bloqueado em ${fmtDate(b.bannedAt)}${b.reason ? ' — ' + escapeHtml(b.reason) : ''}</div>
         </div>
-        <button onclick="unbanItem('${b.id}')">🔓 Desbloquear</button>
+        <button onclick="unbanItem('${b.id}')">${ICO.unlock} Desbloquear</button>
       </div>
     `).join("");
   }
